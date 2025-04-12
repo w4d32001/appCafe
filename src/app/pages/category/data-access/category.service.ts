@@ -28,4 +28,8 @@ export class CategoryService {
     return this.http.delete(`${this.url}/delete/${id}`)
   }
 
+  totalCategories(): Observable<any>{
+    return this.http.get<any>(`${this.url}/totalCategories`)
+  }
+
 }

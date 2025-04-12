@@ -6,32 +6,36 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ProductService {
-  url = `${env.url}/product`
+export class UserService {
+
+  url = `${env.url}/user`
 
   http = inject(HttpClient)
 
-  getProducts(): Observable<any[]>{
+  getUsers(): Observable<any[]>{
     return this.http.get<any[]>(`${this.url}/getAll`)
   }
 
-  getProduct(id: number): Observable<any>{
+  getUser(id: number): Observable<any>{
     return this.http.get<any>(`${this.url}/getOne/${id}`)
   }
 
-  save(product: any): Observable<any>{
-    return this.http.post<any>(`${this.url}/save`, product)
+  save(user: any): Observable<any>{
+    return this.http.post<any>(`${this.url}/save`, user)
   }
 
-  update(product: any, id: number): Observable<any>{
-    return this.http.put<any>(`${this.url}/update/${id}`, product)
+  update(user: any, id: number): Observable<any>{
+    return this.http.put<any>(`${this.url}/update/${id}`, user)
   }
 
   delete(id: number): Observable<any>{
     return this.http.delete(`${this.url}/delete/${id}`)
   }
 
-  totalProducts(): Observable<any>{
-    return this.http.get<any>(`${this.url}/totalProducts`)
+  login(formData: FormData): Observable<any>{
+    return this.http.post(`${this.url}/login`, formData, {
+      responseType: 'text'
+    })
   }
+
 }

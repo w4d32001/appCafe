@@ -1,0 +1,132 @@
+@if (visible) {
+<div class="fixed inset-0 bg-black/20 z-50 flex items-center justify-center">
+  <div class="bg-white p-6 rounded-lg shadow-lg w-[90%] max-w-4xl space-y-4">
+    <h2 class="text-xl font-semibold text-center text-gray-700">
+      {{ isEdit ? "Editar Usuario" : "Nuevo Usuario" }}
+    </h2>
+
+    <form [formGroup]="productForm" (ngSubmit)="submit()" class="space-y-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="flex flex-col gap-y-2">
+          <label for="" class="font-medium">Nombre</label>
+          <input
+            formControlName="username"
+            type="text"
+            placeholder="Nombre del usuario"
+            class="w-full border p-2 rounded outline-none border-gray-400"
+          />
+
+          @if (usernameFb.invalid && (usernameFb.touched || usernameFb.dirty)) {
+          <div class="text-red-600 text-sm mt-1">
+            @if (usernameFb.errors?.['required']) {
+            <div>El nombre es obligatorio.</div>
+            } @if (usernameFb.errors?.['minlength']) {
+            <div>Debe tener al menos 3 caracteres.</div>
+            }
+          </div>
+          }
+        </div>
+        @if (isEdit == false) {
+        <div class="flex flex-col gap-y-2">
+          <label for="" class="font-medium">Contraseña</label>
+          <input
+            formControlName="password"
+            type="text"
+            placeholder="Contraseña"
+            class="w-full border p-2 rounded outline-none border-gray-400"
+          />
+
+          @if (passwordFb.invalid && (passwordFb.touched || passwordFb.dirty)) {
+          <div class="text-red-600 text-sm mt-1">
+            @if (passwordFb.errors?.['required']) {
+            <div>La descripcion es obligatoria.</div>
+            } @if (passwordFb.errors?.['minlength']) {
+            <div>Debe tener al menos 6 caracteres.</div>
+            }
+          </div>
+          }
+        </div>
+        } @if (isEdit) {
+        <div class="flex flex-col gap-y-2">
+          <label for="" class="font-medium">Email</label>
+          <input
+            formControlName="email"
+            type="text"
+            placeholder="email"
+            class="w-full border p-2 rounded outline-none border-gray-400"
+          />
+
+          @if (emailFb.invalid && (emailFb.touched || emailFb.dirty)) {
+          <div class="text-red-600 text-sm mt-1">
+            @if (emailFb.errors?.['required']) {
+            <div>El precio es obligatorio.</div>
+            } @if (emailFb.errors?.['email']) {
+            <div>Ingrese un email valido.</div>
+            }
+          </div>
+          }
+        </div>
+        }
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        @if (isEdit == false) {
+        <div class="flex flex-col gap-y-2">
+          <label for="" class="font-medium">Email</label>
+          <input
+            formControlName="email"
+            type="text"
+            placeholder="Email"
+            class="w-full border p-2 rounded outline-none border-gray-400"
+          />
+
+          @if (emailFb.invalid && (emailFb.touched || emailFb.dirty)) {
+          <div class="text-red-600 text-sm mt-1">
+            @if (emailFb.errors?.['required']) {
+            <div>El precio es obligatorio.</div>
+            } @if (emailFb.errors?.['email']) {
+              <div>Ingrese un email valido.</div>
+              }
+          </div>
+          }
+        </div>
+        }
+        <div class="flex flex-col gap-y-2">
+          <label for="" class="font-medium">Telefono</label>
+          <input
+            formControlName="phone"
+            type="text"
+            placeholder="Telefono"
+            class="w-full border p-2 rounded outline-none border-gray-400"
+          />
+          @if (phoneFb.invalid && (phoneFb.touched || phoneFb.dirty)) {
+          <div class="text-red-600 text-sm mt-1">
+            @if (phoneFb.errors?.['required']) {
+            <div>La categoria es obligatoria.</div>
+            } @if (phoneFb.errors?.['minlength']) {
+            <div>Debe tener al menos 9 numeros.</div>
+            }
+          </div>
+          }
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-2">
+        <button
+          type="button"
+          (click)="close()"
+          class="px-4 py-2 rounded bg-red-600 hover:bg-red-700 text-white font-medium"
+        >
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          [disabled]="productForm.invalid"
+          class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 font-medium"
+        >
+          {{ isEdit ? "Actualizar" : "Guardar" }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+}

@@ -1,0 +1,54 @@
+<div class="h-svh flex items-center justify-center bg-fuchsia-800">
+    <div class="flex items-center justify-center shadow-2xl rounded-2xl bg-white">
+        <div>
+            <img src="/cafe.png" alt="" class="w-[500px]">
+        </div>
+        <div class="flex w-[450px] h-auto flex-col justify-around pr-2">
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex w-[450px] py-4 flex-col gap-y-2 justify-around pr-2">
+                <h2 class="text-center text-fuchsia-800 text-xl font-bold">Registrese</h2>
+                <div class="flex flex-col gap-y-4">
+                    <div class="flex flex-col gap-y-2 w-full">
+                        <label>Nombre</label>
+                        <input type="text" formControlName="username" class="py-2 px-4 rounded outline-none border border-fuchsia-800">
+                        <div class="text-red-600 text-sm" *ngIf="username.invalid && (username.dirty || username.touched)">
+                            <span *ngIf="username.errors?.['required']">El nombre es onligatorio.</span>
+                            <span *ngIf="username.errors?.['minlength']">El nombre debe tener al menos 3 caracteres.</span>
+                          </div>
+                      </div>
+                  <div class="flex flex-col gap-y-2 w-full">
+                    <label>Email</label>
+                    <input type="text" formControlName="email" class="py-2 px-4 rounded outline-none border border-fuchsia-800">
+                    <div class="text-red-600 text-sm" *ngIf="email.invalid && (email.dirty || email.touched)">
+                        <span *ngIf="email.errors?.['required']">El email es obligatorio.</span>
+                        <span *ngIf="email.errors?.['email']">Ingrese un email válido.</span>
+                      </div>
+                  </div>
+                  <div class="flex flex-col gap-y-2 w-full">
+                    <label>Contraseña</label>
+                    <input type="password" formControlName="password" class="py-2 px-4 rounded outline-none border border-fuchsia-800">
+                    <div class="text-red-600 text-sm" *ngIf="password.invalid && (password.dirty || password.touched)">
+                        <span *ngIf="password.errors?.['required']">La contraseña es obligatoria.</span>
+                        <span *ngIf="password.errors?.['minlength']">La contraseña debe tener al menos 6 caracteres.</span>
+                      </div>
+                  </div>
+                  <div class="flex flex-col gap-y-2 w-full">
+                    <label>Telefono</label>
+                    <input type="text" formControlName="phone" class="py-2 px-4 rounded outline-none border border-fuchsia-800">
+                    <div class="text-red-600 text-sm" *ngIf="phone.invalid && (phone.dirty || phone.touched)">
+                        <span *ngIf="phone.errors?.['required']">El telefono es obligatorio.</span>
+                        <span *ngIf="phone.errors?.['minlength']">El telefono debe tener al menos 9 caracteres.</span>
+                      </div>
+                  </div>
+                  <div class="flex w-full items-center">
+                    <button type="submit" class="bg-fuchsia-800 rounded text-white font-medium w-full py-4 text-xl hover:cursor-pointer">
+                      Registrarse
+                    </button>
+                  </div>
+                </div>
+                <p class="text-center">Ya tienes una cuenta? <a routerLink="/" class="text-fuchsia-800 hover:underline">Login</a></p>
+              </form>
+              
+        </div>
+        
+    </div>
+</div>

@@ -1,7 +1,7 @@
 <div class="flex  flex-col gap-y-4 w-full">
     <div class="flex py-4 px-2 items-center justify-between bg-white shadow-2xs rounded">
         <h2 class="text-xl font-medium text-gray-700">Administracion de ordenes</h2>
-        <button class="py-2 px-4 bg-primary-900 text-white rounded font-medium"><fa-icon [icon]="getIcon('save')"/> Enviar</button>
+        <button class="py-2 px-4 bg-primary-900 text-white rounded font-medium" (click)="sendOrder()" ><fa-icon [icon]="getIcon('save')"/> Enviar</button>
     </div>
     <div class="flex flex-col gap-y-4 py-2 px-2 bg-white rounded">
         <h2 class="text-xl font-medium text-gray-700">Detalles del cliente</h2>
@@ -10,23 +10,28 @@
                 <div class="flex justify-around gap-2">
                     <div class="flex flex-col gap-y-2"> 
                         <label for="">Cliente</label>
-                        <select name="" id="" class="border border-gray-300 py-2 px-4 outline-none  rounded">
+                        <select name="" id="" class="border border-gray-300 py-2 px-4 outline-none  rounded" (change)="onUserChange($event)">
                             <option value="" class="text-gray-700">-- Seleccione un Cliente --</option>
+                            @for (item of users; track $index) {
+                                <option value="{{ item.id }}">{{ item.username }}</option>
+                            }
                         </select>
                     </div>
                     <div class="flex flex-col gap-y-2">
                         <label for="">Correo</label>
-                        <input type="text" disabled  class="border-b border-gray-300 py-2 px-4 focus:outline-none focus:border-b-primary-700 ">
+                        <input type="text" disabled [value]="user.email || ''"  class="border-b border-gray-300 py-2 px-4 focus:outline-none focus:border-b-primary-700 ">
                     </div>
                     <div class="flex flex-col gap-y-2">
                         <label for="">Numero</label>
-                        <input type="text" disabled class="border-b border-gray-300 py-2 px-4  focus:outline-none focus:border-b-primary-700">
+                        <input type="text" disabled [value]="user.phone || ''"  class="border-b border-gray-300 py-2 px-4  focus:outline-none focus:border-b-primary-700">
                     </div>
                     <div class="flex flex-col gap-y-2">
                         <label for="">Metodo de pago</label>
-                        <select name="" id="" class="border border-gray-300 py-2 px-4 outline-none  rounded">
-                            <option value="" class="text-gray-700">-- Seleccione un metodo --</option>
-                        </select>
+                        <select [(ngModel)]="paymentMethod" class="border border-gray-300 py-2 px-4 outline-none rounded">
+                            <option value="">-- Seleccione un metodo --</option>
+                            <option value="Al contado">Al contado</option>
+                            <option value="Con tarjeta">Con tarjeta</option>
+                          </select>
                     </div>
                 </div>
             </div>
@@ -77,26 +82,31 @@
             <table class="w-full text-sm text-left border">
                 <thead class="bg-gray-100 text-gray-600">
                     <tr>
+                        <th class="py-2 px-4 font-medium">N°</th>
                         <th class="py-2 px-4">Producto</th>
                         <th class="py-2 px-4">Precio</th>
                         <th class="py-2 px-4">Cantidad</th>
                         <th class="py-2 px-4">Subtotal</th>
-                        <th class="py-2 px-4">Acciones</th>
+                        <th class="py-2 px-4 text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of orderItems; let i = index">
-                        <td class="py-2 px-4">{{ item.name }}</td>
-                        <td class="py-2 px-4">{{ item.price | currency:'USD' }}</td>
-                        <td class="py-2 px-4">
-                            <input type="number" [(ngModel)]="item.quantity" (change)="editQuantity(i, item.quantity)"
-                                class="border px-2 py-1 rounded w-16">
-                        </td>
-                        <td class="py-2 px-4">{{ item.subtotal | currency:'USD' }}</td>
-                        <td class="py-2 px-4">
-                            <button (click)="removeProduct(i)" class="text-red-600 hover:underline">Eliminar</button>
-                        </td>
-                    </tr>
+                    @for (item of orderItems; track $index) {
+                        <tr>
+                            <td class="py-2 px-4">{{ $index + 1 }}</td>
+                            <td class="py-2 px-4">{{ item.name }}</td>
+                            <td class="py-2 px-4">{{ item.price | currency:'USD' }}</td>
+                            <td class="py-2 px-4">
+                                <input type="number" [(ngModel)]="item.quantity" (change)="editQuantity($index, item.quantity)"
+                                    class="border px-2 py-1 rounded w-16">
+                            </td>
+                            <td class="py-2 px-4">{{ item.subtotal | currency:'USD' }}</td>
+                            <td class="py-2 px-4 text-center">
+                                <button (click)="removeProduct($index)" class="text-red-600 hover:underline"><fa-icon [icon]="getIcon('delete')" /></button>
+                            </td>
+                        </tr>
+                    }
+                    
                 </tbody>
             </table>
         </div>

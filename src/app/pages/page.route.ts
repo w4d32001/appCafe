@@ -21,6 +21,14 @@ export default [
             {
                 path: 'order',
                 loadComponent: () => import('./order/order.component').then(m => m.OrderComponent)
+            },
+            {
+                path: 'user',
+                loadComponent: () => import('./user/user.component').then(m => m.UserComponent)
+            },
+            {
+                path: 'bill',
+                loadComponent: () => import('./bill/bill.component').then(m => m.BillComponent)
             }
         ]
     }
