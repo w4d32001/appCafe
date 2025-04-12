@@ -1,0 +1,105 @@
+<div class="flex  flex-col gap-y-4 w-full">
+    <div class="flex py-4 px-2 items-center justify-between bg-white shadow-2xs rounded">
+        <h2 class="text-xl font-medium text-gray-700">Administracion de ordenes</h2>
+        <button class="py-2 px-4 bg-primary-900 text-white rounded font-medium"><fa-icon [icon]="getIcon('save')"/> Enviar</button>
+    </div>
+    <div class="flex flex-col gap-y-4 py-2 px-2 bg-white rounded">
+        <h2 class="text-xl font-medium text-gray-700">Detalles del cliente</h2>
+        <div>
+            <div class="flex flex-col gap-y-4 py-2 px-2 bg-white rounded">
+                <div class="flex justify-around gap-2">
+                    <div class="flex flex-col gap-y-2"> 
+                        <label for="">Cliente</label>
+                        <select name="" id="" class="border border-gray-300 py-2 px-4 outline-none  rounded">
+                            <option value="" class="text-gray-700">-- Seleccione un Cliente --</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col gap-y-2">
+                        <label for="">Correo</label>
+                        <input type="text" disabled  class="border-b border-gray-300 py-2 px-4 focus:outline-none focus:border-b-primary-700 ">
+                    </div>
+                    <div class="flex flex-col gap-y-2">
+                        <label for="">Numero</label>
+                        <input type="text" disabled class="border-b border-gray-300 py-2 px-4  focus:outline-none focus:border-b-primary-700">
+                    </div>
+                    <div class="flex flex-col gap-y-2">
+                        <label for="">Metodo de pago</label>
+                        <select name="" id="" class="border border-gray-300 py-2 px-4 outline-none  rounded">
+                            <option value="" class="text-gray-700">-- Seleccione un metodo --</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-col gap-y-4 py-2 px-2 bg-white rounded">
+        <h2 class="text-xl font-medium text-gray-700">Seleccione un producto</h2>
+        <div class="flex justify-around gap-2">
+            <div class="flex flex-col gap-y-2"> 
+                <label for="">Producto</label>
+                <select name="" id="" class="border border-gray-300 py-2 px-4 outline-none  rounded" (change)="onProductChange($event)">
+                    <option value="" class="text-gray-700">-- Seleccione un producto --</option>
+                    @for (item of products; track $index) {
+                        <option value="{{ item.id }}">{{ item.name }}</option>
+                    }
+                </select>
+            </div>
+            <div class="flex flex-col gap-y-2">
+                <label for="">Categoria</label>
+                <input type="text" disabled [value]="product.category?.name || ''"
+                  class="border-b border-gray-300 py-2 px-4 focus:outline-none focus:border-b-primary-700">
+              </div>
+              
+              <div class="flex flex-col gap-y-2">
+                <label for="">Precio</label>
+                <input type="text" disabled [value]="product.price || ''"
+                  class="border-b border-gray-300 py-2 px-4 focus:outline-none focus:border-b-primary-700">
+              </div>
+            <div class="flex flex-col gap-y-2">
+                <label for="">Cantidad</label>
+                <input type="number" [(ngModel)]="selectedQuantity"
+                class="border-b border-gray-300 py-2 px-4 focus:outline-none focus:border-b-primary-700">
+
+            </div>
+        </div>
+        <div class="flex items-center justify-between">
+            <button (click)="addProductToOrder()" class="bg-green-500 text-white rounded hover:bg-green-600 py-2 px-4 transition-all">
+                <fa-icon [icon]="getIcon('plus')"/> Agregar
+            </button>
+            <button disabled class="bg-primary-900 text-white rounded py-2 px-4">
+                <fa-icon [icon]="getIcon('coins')"/> Total: {{ total | currency:'USD' }}
+            </button>
+        </div>
+    </div>
+    <div>
+        <div class="mt-4 bg-white rounded shadow p-4">
+            <h2 class="text-lg font-semibold mb-2 text-gray-700">Productos seleccionados</h2>
+            <table class="w-full text-sm text-left border">
+                <thead class="bg-gray-100 text-gray-600">
+                    <tr>
+                        <th class="py-2 px-4">Producto</th>
+                        <th class="py-2 px-4">Precio</th>
+                        <th class="py-2 px-4">Cantidad</th>
+                        <th class="py-2 px-4">Subtotal</th>
+                        <th class="py-2 px-4">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of orderItems; let i = index">
+                        <td class="py-2 px-4">{{ item.name }}</td>
+                        <td class="py-2 px-4">{{ item.price | currency:'USD' }}</td>
+                        <td class="py-2 px-4">
+                            <input type="number" [(ngModel)]="item.quantity" (change)="editQuantity(i, item.quantity)"
+                                class="border px-2 py-1 rounded w-16">
+                        </td>
+                        <td class="py-2 px-4">{{ item.subtotal | currency:'USD' }}</td>
+                        <td class="py-2 px-4">
+                            <button (click)="removeProduct(i)" class="text-red-600 hover:underline">Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+</div>

@@ -1,0 +1,22 @@
+<aside
+  class="transition-transform duration-300 transform w-64 h-svh overflow-y-auto bg-white fixed z-50 top-0 left-0"
+  [ngClass]="{
+    '-translate-x-full': (isOpen$ | async),
+    'translate-x-0': !(isOpen$ | async)
+  }"
+>
+  <div class="h-20 bg-primary-900 flex items-center justify-center text-white">Logo</div>
+  <nav>
+    <ul>
+      @for (item of data; track $index) {
+        <ng-container>
+          @if (item.type === 'item') {
+            <app-sidebar-item [icon]="item.icon" [label]="item.label" [link]="item.link" />
+          } @if (item.type === 'separator') {
+            <span class="px-2 py-2 w-full flex">{{ item.label }}</span>
+          }
+        </ng-container>
+      }
+    </ul>
+  </nav>
+</aside>

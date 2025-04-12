@@ -1,0 +1,60 @@
+<div class="p-4 space-y-4">
+  <div class="bg-white p-2 rounded flex gap-x-4 items-center shadow-sm">
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      (input)="filterCategories()"
+      placeholder="Buscar..."
+      class="w-full p-2 border-b-2 border-gray-300 outline-none focus:border-b-primary-900"
+    />
+    <button
+      class="bg-green-600 text-white py-2 px-4 rounded-xl text-lg font-medium flex items-center gap-x-2 cursor-pointer"
+      (click)="openModal(false)"
+    >
+      <fa-icon [icon]="getIcon('plus')" />Nuevo
+    </button>
+  </div>
+
+  <div class="overflow-x-auto p-2 bg-white rounded-2xl shadow-sm">
+    <table class="min-w-full bg-white">
+      <thead class="text-left text-sm text-gray-600">
+        <tr>
+          <th class="px-4 py-3 text-center font-medium">N°</th>
+          <th class="px-4 py-3 text-center">Nombre</th>
+          <th class="px-4 py-3 text-center">Creado el</th>
+          <th class="px-4 py-3 text-center">Actualizado el</th>
+          <th class="px-4 py-3 text-center">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of filteredCategories; track $index) {
+        <tr class="bg-white hover:bg-gray-50 transition">
+          <td class="px-4 py-3 font-medium text-center">{{ $index + 1 }}</td>
+          <td class="px-4 py-3">{{ item.name }}</td>
+          <td class="px-4 py-3 text-center">{{ item.createdAt }}</td>
+          <td class="px-4 py-3 text-center">{{ item.updatedAt }}</td>
+          <td class="px-4 py-3 text-center">
+            <button class="text-blue-600 hover:underline mr-4 cursor-pointer">
+              <fa-icon
+                [icon]="getIcon('edit')"
+                (click)="openModal(true, item)"
+              />
+            </button>
+            <button class="text-red-600 hover:underline cursor-pointer">
+              <fa-icon [icon]="getIcon('delete')" (click)="delete(item.id)" />
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<app-category-modal
+  [visible]="modalVisible"
+  [isEdit]="isEditMode"
+  [formData]="selectedCategory"
+  (save)="saveCategory($event)"
+  (closeModal)="modalVisible = false"
+/>

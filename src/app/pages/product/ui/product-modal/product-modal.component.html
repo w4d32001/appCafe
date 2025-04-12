@@ -1,0 +1,112 @@
+@if (visible) {
+<div class="fixed inset-0 bg-black/20 z-50 flex items-center justify-center">
+  <div class="bg-white p-6 rounded-lg shadow-lg w-[90%] max-w-4xl space-y-4">
+    <h2 class="text-xl font-semibold text-center text-gray-700">
+      {{ isEdit ? "Editar Producto" : "Nuevo Producto" }}
+    </h2>
+
+    <form [formGroup]="productForm" (ngSubmit)="submit()" class="space-y-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <input
+            formControlName="name"
+            type="text"
+            placeholder="Nombre del producto"
+            class="w-full border p-2 rounded outline-none border-gray-400"
+          />
+
+          @if (nameFb.invalid && (nameFb.touched || nameFb.dirty)) {
+          <div class="text-red-600 text-sm mt-1">
+            @if (nameFb.errors?.['required']) {
+            <div>El nombre es obligatorio.</div>
+            } @if (nameFb.errors?.['minlength']) {
+            <div>Debe tener al menos 3 caracteres.</div>
+            }
+          </div>
+          }
+        </div>
+        <div>
+            <textarea
+            #descTextarea
+            formControlName="description"
+            placeholder="Descripción del producto"
+            class="w-full border p-2 rounded outline-none border-gray-400 resize-none overflow-hidden"
+            rows="1"
+            (input)="autoGrow(descTextarea)"
+          ></textarea>
+          
+
+          @if (priceFb.invalid && (priceFb.touched || priceFb.dirty)) {
+          <div class="text-red-600 text-sm mt-1">
+            @if (priceFb.errors?.['required']) {
+            <div>La descripcion es obligatoria.</div>
+            } @if (priceFb.errors?.['minlength']) {
+            <div>Debe tener al menos 3 caracteres.</div>
+            }
+          </div>
+          }
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <input
+            formControlName="price"
+            type="text"
+            placeholder="Precio del producto"
+            class="w-full border p-2 rounded outline-none border-gray-400"
+          />
+
+          @if (priceFb.invalid && (priceFb.touched || priceFb.dirty)) {
+          <div class="text-red-600 text-sm mt-1">
+            @if (priceFb.errors?.['required']) {
+            <div>El precio es obligatorio.</div>
+            } @if (priceFb.errors?.['minlength']) {
+            <div>Debe tener al menos 3 caracteres.</div>
+            }
+          </div>
+          }
+        </div>
+        <div>
+          <select
+            class="w-full border py-[10px] px-2 rounded border-gray-400 outline-none"
+            name=""
+            id=""
+            formControlName="category"
+          >
+            <option value="" disabled selected>Seleccione una categoria</option>
+            @for (item of categories; track $index) {
+            <option value="{{ item.id }}">{{ item.name }}</option>
+            }
+          </select>
+          @if (categoryFb.invalid && (categoryFb.touched || categoryFb.dirty)) {
+          <div class="text-red-600 text-sm mt-1">
+            @if (categoryFb.errors?.['required']) {
+            <div>La categoria es obligatoria.</div>
+            } @if (categoryFb.errors?.['minlength']) {
+            <div>Debe tener al menos 3 caracteres.</div>
+            }
+          </div>
+          }
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-2">
+        <button
+          type="button"
+          (click)="close()"
+          class="px-4 py-2 rounded bg-red-600 hover:bg-red-700 text-white font-medium"
+        >
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          [disabled]="productForm.invalid"
+          class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 font-medium"
+        >
+          {{ isEdit ? "Actualizar" : "Guardar" }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+}

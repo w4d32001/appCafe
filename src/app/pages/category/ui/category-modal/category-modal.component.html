@@ -1,0 +1,49 @@
+@if (visible) {
+    <div class="fixed inset-0 bg-black/20 z-50 flex items-center justify-center">
+      <div class="bg-white p-6 rounded-lg shadow-lg w-[90%] max-w-md space-y-4">
+        <h2 class="text-xl font-semibold text-center">
+          {{ isEdit ? "Editar Categoria" : "Nueva Categoria" }}
+        </h2>
+  
+        <form [formGroup]="categoryForm" (ngSubmit)="submit()" class="space-y-4">
+          <div>
+            <input
+              formControlName="name"
+              type="text"
+              placeholder="Nombre de la categoria"
+              class="w-full border p-2 rounded outline-none"
+            />
+  
+            @if (nameFb.invalid && (nameFb.touched || nameFb.dirty)) {
+              <div class="text-red-600 text-sm mt-1">
+                @if (nameFb.errors?.['required']) {
+                  <div>El nombre es obligatorio.</div>
+                }
+                @if (nameFb.errors?.['minlength']) {
+                  <div>Debe tener al menos 3 caracteres.</div>
+                }
+              </div>
+            }
+          </div>
+  
+          <div class="flex justify-end gap-2">
+            <button
+              type="button"
+              (click)="close()"
+              class="px-4 py-2 rounded bg-red-600 hover:bg-red-700 text-white font-medium"
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              [disabled]="categoryForm.invalid"
+              class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 font-medium"
+            >
+              {{ isEdit ? "Actualizar" : "Guardar" }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+  
