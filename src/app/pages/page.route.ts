@@ -29,6 +29,10 @@ export default [
             {
                 path: 'bill',
                 loadComponent: () => import('./bill/bill.component').then(m => m.BillComponent)
+            },
+            {
+                path: 'examen',
+                loadComponent: () => import('./examen/examen.component').then(m => m.ExamenComponent)
             }
         ]
     }

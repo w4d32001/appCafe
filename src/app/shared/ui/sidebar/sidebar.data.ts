@@ -34,4 +34,6 @@ export const dataSidebar: SidebarMenuItem[] = [
   { type: 'item', icon: faUser, label: 'Cliente', link: '/page/user' },
   { type: 'separator', label: 'Facturas' },
   { type: 'item', icon: faFileInvoice, label: 'Factura', link: '/page/bill' },
+  { type: 'separator', label: 'Examen' },
+  { type: 'item', icon: faFileInvoice, label: 'Examen', link: '/page/examen' },
 ];

@@ -1,0 +1,125 @@
+@if (visible) {
+<div class="fixed inset-0 bg-black/20 z-50 flex items-center justify-center">
+  <div class="bg-white p-6 rounded-lg shadow-lg w-[90%] max-w-4xl space-y-4">
+    <h2 class="text-xl font-semibold text-center text-gray-700">
+      {{ isEdit ? "Editar" : "Nuevo" }}
+    </h2>
+
+    <form [formGroup]="exaForm" (ngSubmit)="submit()" class="space-y-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="flex flex-col gap-y-2">
+          <label for="" class="font-medium">Descripcion</label>
+          <input
+            formControlName="description"
+            type="text"
+            placeholder="descripcion"
+            class="w-full border p-2 rounded outline-none border-gray-400"
+          />
+
+          @if (descriptionFb.invalid && (descriptionFb.touched ||
+          descriptionFb.dirty)) {
+          <div class="text-red-600 text-sm mt-1">
+            @if (descriptionFb.errors?.['required']) {
+            <div>La descripcion es obligatoria.</div>
+            }
+          </div>
+          }
+        </div>
+        <div class="flex flex-col gap-y-2">
+          <label for="" class="font-medium">Pais</label>
+          <input
+            formControlName="country"
+            type="text"
+            placeholder="Pais"
+            class="w-full border p-2 rounded outline-none border-gray-400"
+          />
+
+          @if (brandFb.invalid && (brandFb.touched || brandFb.dirty)) {
+          <div class="text-red-600 text-sm mt-1">
+            @if (brandFb.errors?.['required']) {
+            <div>El pais es obligatorio.</div>
+            }
+          </div>
+          }
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="flex flex-col gap-y-2">
+          <label for="" class="font-medium">Marca</label>
+          <input
+            formControlName="brand"
+            type="text"
+            placeholder="Marca"
+            class="w-full border p-2 rounded outline-none border-gray-400"
+          />
+
+          @if (brandFb.invalid && (brandFb.touched || brandFb.dirty)) {
+          <div class="text-red-600 text-sm mt-1">
+            @if (brandFb.errors?.['required']) {
+            <div>La marca es obligatoria.</div>
+            }
+          </div>
+          }
+        </div>
+        <div class="flex flex-col gap-y-2">
+          <label for="" class="font-medium">Fecha de produccion</label>
+          <input
+            formControlName="productionDate"
+            type="date"
+            placeholder="fecha"
+            class="w-full border p-2 rounded outline-none border-gray-400"
+          />
+
+          @if (productionDateFb.invalid && (productionDateFb.touched ||
+          productionDateFb.dirty)) {
+          <div class="text-red-600 text-sm mt-1">
+            @if (productionDateFb.errors?.['required']) {
+            <div>La fecha es obligatoria.</div>
+            }
+          </div>
+          }
+        </div>
+      </div>
+      <div class="flex flex-col gap-y-2">
+        <label for="" class="font-medium">Fecha de vencimiento</label>
+        <input
+          formControlName="expirationDate"
+          type="date"
+          placeholder="fecha"
+          class="w-full border p-2 rounded outline-none border-gray-400"
+        />
+      
+        @if (expirationDateFb.invalid && (expirationDateFb.touched || expirationDateFb.dirty)) {
+          <div class="text-red-600 text-sm mt-1">
+            @if (expirationDateFb.errors?.['required']) {
+              <div>La fecha es obligatoria.</div>
+            }
+          </div>
+        }
+        @if (exaForm.errors?.['expirationBeforeProduction'] && (expirationDateFb.touched || productionDateFb.touched)) {
+            <div class="text-red-600 text-sm mt-1">
+              La fecha de vencimiento debe ser posterior a la fecha de producción.
+            </div>
+          }
+      </div>
+
+      <div class="flex justify-end gap-2">
+        <button
+          type="button"
+          (click)="close()"
+          class="px-4 py-2 rounded bg-red-600 hover:bg-red-700 text-white font-medium"
+        >
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          [disabled]="exaForm.invalid"
+          class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 font-medium"
+        >
+          {{ isEdit ? "Actualizar" : "Guardar" }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+}
