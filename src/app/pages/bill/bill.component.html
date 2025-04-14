@@ -20,10 +20,10 @@
             <td class="px-4 py-3 font-medium text-center">{{ $index + 1 }}</td>
             <td class="px-4 py-3">{{ item.user.username }}</td>
             <td class="px-4 py-3">
-              {{ item.items[0].product.name }}
+              {{ item.product.name }}
             </td>
-            <td class="px-4 py-3 font-mono">S/{{ item.items[0].subtotal }}</td>
-            <td class="px-4 py-3 text-center font-mono">{{ item.items[0].quantity }}</td>
+            <td class="px-4 py-3 font-mono">S/{{ item.subtotal }}</td>
+            <td class="px-4 py-3 text-center font-mono">{{ item.quantity }}</td>
             <td class="px-4 py-3 font-mono text-center">{{ item.updatedAt | date : "dd/MM/yyyy HH:mm:ss" }}</td>
           </tr>
           }
