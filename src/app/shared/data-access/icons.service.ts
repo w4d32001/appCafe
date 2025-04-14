@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { faBars, faBox, faCheck, faCircle, faCircleNotch, faClose, faCoins, faDotCircle, faEdit, faEye, faFloppyDisk, faList, faPlus, faSave, faSearch, faTrash, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faBox, faCheck, faCircle, faCircleNotch, faClose, faCoins, faDotCircle, faEdit, faEye, faFloppyDisk, faList, faPlus, faRightFromBracket, faSave, faSearch, faTrash, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,8 @@ export class IconsService {
     'bars': faBars,
     'list': faList,
     'box': faBox,
-    'coins': faCoins
+    'coins': faCoins,
+    'logout': faRightFromBracket
   }
 
   getIcon(name: string): IconDefinition {
